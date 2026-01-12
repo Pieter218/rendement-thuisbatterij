@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">:root{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--bg:#f6f7f9;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--card:#ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--text:#101114;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--muted:#5b6270;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--border:#e6e8ee;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--shadow: 0 1px 0 rgba(0,0,0,.03);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--radius:14px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">*{ box-sizing:border-box; }</p>
+<p class="p1">html,body{ margin:0; padding:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background:var(--bg); }</p>
+<p class="p1">a{ color:inherit; text-decoration:none; }</p>
+<p class="p1">.container{ max-width:1100px; margin:0 auto; padding:0 16px; }</p>
+<p class="p2"><br></p>
+<p class="p1">.header{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position:sticky; top:0; z-index:20;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background:rgba(255,255,255,.9);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>backdrop-filter: blur(8px);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-bottom:1px solid var(--border);</p>
+<p class="p1">}</p>
+<p class="p1">.header-inner{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; }</p>
+<p class="p1">.brand{ display:flex; align-items:center; gap:10px; }</p>
+<p class="p1">.brand-mark{ width:36px; height:36px; border-radius:12px; display:grid; place-items:center; background:#111; color:#fff; }</p>
+<p class="p1">.brand-title{ font-weight:800; }</p>
+<p class="p1">.brand-sub{ font-size:12px; color:var(--muted); margin-top:2px; }</p>
+<p class="p2"><br></p>
+<p class="p1">.hero{ padding:48px 0 26px; }</p>
+<p class="p1">.hero-grid{ display:grid; grid-template-columns: 1.3fr .7fr; gap:18px; align-items:start; }</p>
+<p class="p1">.hero h1{ margin:0 0 10px; font-size:38px; letter-spacing:-0.02em; line-height:1.05; }</p>
+<p class="p1">.lead{ margin:0 0 18px; font-size:16px; color:#2a2f3a; line-height:1.5; }</p>
+<p class="p1">.hero-points{ display:grid; grid-template-columns:1fr; gap:10px; margin:18px 0; }</p>
+<p class="p1">.point{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:12px; box-shadow:var(--shadow); }</p>
+<p class="p1">.point-title{ font-weight:700; margin-bottom:4px; }</p>
+<p class="p1">.point-text{ color:var(--muted); font-size:13px; }</p>
+<p class="p2"><br></p>
+<p class="p1">.hero-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); }</p>
+<p class="p1">.hero-card-title{ font-weight:800; margin-bottom:10px; }</p>
+<p class="p1">.checklist{ margin:0; padding-left:18px; color:var(--muted); }</p>
+<p class="p1">.hero-card-note{ margin-top:10px; font-size:12px; color:var(--muted); }</p>
+<p class="p2"><br></p>
+<p class="p1">.cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }</p>
+<p class="p1">.fineprint{ margin-top:12px; font-size:12px; color:var(--muted); }</p>
+<p class="p2"><br></p>
+<p class="p1">.section{ padding:26px 0 44px; }</p>
+<p class="p1">.section.alt{ background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }</p>
+<p class="p1">.section-head{ margin-bottom:12px; }</p>
+<p class="p1">.section-head h2{ margin:0; font-size:22px; }</p>
+<p class="p1">.section-head p{ margin:6px 0 0; }</p>
+<p class="p2"><br></p>
+<p class="p1">.grid{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }</p>
+<p class="p1">.grid-2{ grid-template-columns: 1fr 1fr; }</p>
+<p class="p2"><br></p>
+<p class="p1">.card{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background:var(--card);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border:1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius:var(--radius);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding:14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow:var(--shadow);</p>
+<p class="p1">}</p>
+<p class="p1">.card h3{ margin:0 0 12px; font-size:16px; }</p>
+<p class="p2"><br></p>
+<p class="p1">.row{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }</p>
+<p class="p1">.label{ display:block; font-size:12px; color:#2a2f3a; margin:10px 0 6px; }</p>
+<p class="p1">.input{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width:100%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding:10px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius:12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border:1px solid #d8dbe5;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>outline:none;</p>
+<p class="p1">}</p>
+<p class="p1">.input:focus{ border-color:#111; }</p>
+<p class="p2"><br></p>
+<p class="p1">.btn{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display:inline-flex; align-items:center; justify-content:center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background:#111; color:#fff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border:0; border-radius:12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding:10px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cursor:pointer;</p>
+<p class="p1">}</p>
+<p class="p1">.btn:disabled{ opacity:.5; cursor:not-allowed; }</p>
+<p class="p1">.btn-ghost{ background:transparent; color:#111; border:1px solid var(--border); }</p>
+<p class="p2"><br></p>
+<p class="p1">.muted{ color:var(--muted); }</p>
+<p class="p1">.small{ font-size:12px; }</p>
+<p class="p1">.mt8{ margin-top:8px; }</p>
+<p class="p1">.mt12{ margin-top:12px; }</p>
+<p class="p1">.mt16{ margin-top:16px; }</p>
+<p class="p2"><br></p>
+<p class="p1">.results .kpi-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }</p>
+<p class="p1">.kpi{ background:#fbfcff; border:1px solid #eef0f5; border-radius:var(--radius); padding:12px; }</p>
+<p class="p1">.kpi-label{ font-size:12px; color:var(--muted); margin-bottom:6px; }</p>
+<p class="p1">.kpi-value{ font-size:22px; font-weight:900; letter-spacing:-0.01em; }</p>
+<p class="p1">.mini{ background:#fbfcff; border:1px solid #eef0f5; border-radius:var(--radius); padding:10px; }</p>
+<p class="p1">.mini-label{ font-size:12px; color:var(--muted); margin-bottom:6px; }</p>
+<p class="p1">.mini-value{ font-weight:800; }</p>
+<p class="p2"><br></p>
+<p class="p1">.notice-warn{ color:#7a4a00; background:#fff5e6; border:1px solid #ffd59a; padding:10px; border-radius:12px; font-size:13px; }</p>
+<p class="p1">.notice-ok{ color:#0a6b2b; background:#e9fff0; border:1px solid #a9f0c1; padding:10px; border-radius:12px; font-size:13px; }</p>
+<p class="p2"><br></p>
+<p class="p1">.code{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>white-space: pre-wrap;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>word-break: break-word;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background:#0b1020;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color:#e8ecff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding:12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius:12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>overflow:auto;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin:10px 0 0;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">.footer{ padding:18px 0; }</p>
+<p class="p1">.footer-inner{ display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); padding-top:16px; }</p>
+<p class="p2"><br></p>
+<p class="p1">@media (max-width: 900px){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hero-grid{ grid-template-columns:1fr; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.grid{ grid-template-columns:1fr; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.grid-2{ grid-template-columns:1fr; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hero h1{ font-size:30px; }</p>
+<p class="p1">}</p>
+</body>
+</html>
