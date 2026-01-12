@@ -1,276 +1,86 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!doctype html>
+<html lang="nl">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thuisbatterij ROI Calculator (Vlaanderen)</title>
+
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
-<p class="p1">&lt;!doctype html&gt;</p>
-<p class="p1">&lt;html lang="nl"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="utf-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Thuisbatterij ROI Calculator (Vlaanderen)&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link rel="stylesheet" href="./styles.css" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;header class="header"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container header-inner"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="brand"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="brand-mark"&gt;⚡&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="brand-title"&gt;Thuisbatterij ROI&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="brand-sub"&gt;Op basis van je eigen Fluvius kwartierdata&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a class="btn btn-ghost" href="#calculator"&gt;Start berekening&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;main&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="hero"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="container hero-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;h1&gt;Bereken het rendement van een thuisbatterij met kwartierwaarden&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="lead"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Upload je &lt;b&gt;Fluvius kwartiertotalen CSV&lt;/b&gt; en simuleer hoeveel injectie je batterij kan opslaan</p>
-<p class="p1"><span class="Apple-converted-space">            </span>om later import te vermijden. Inclusief &lt;b&gt;capaciteitstarief&lt;/b&gt; (Vlaams gemiddelde).</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="hero-points"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="point"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="point-title"&gt;✅ Echte data&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="point-text"&gt;Gebaseerd op je import/injectie per kwartier.&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="point"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="point-title"&gt;✅ Simpel contractmodel&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="point-text"&gt;Vaste all-in importprijs + vaste injectieprijs (gemiddelden).&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="point"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="point-title"&gt;✅ Realistisch batterijmodel&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="point-text"&gt;Vermogenslimieten + 10% reserve (max DoD 90%).&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="cta-row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;a class="btn" href="#calculator"&gt;Bereken nu&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;a class="btn btn-ghost" href="#faq"&gt;Hoe werkt dit?&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="fineprint"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Disclaimer: resultaten zijn indicatief. Gebruik standaard Vlaamse gemiddelden of pas prijzen aan.</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="hero-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="hero-card-title"&gt;Wat je nodig hebt&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;ul class="checklist"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;Fluvius kwartiertotalen CSV&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;Batterij: kWh + kW laad/ontlaad&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;Investering (€)&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;Import €/kWh &amp; injectie €/kWh (gemiddelden)&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="hero-card-note"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Geen PV-opbrengst of huisverbruik nodig: we werken met netto import/injectie.</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="calculator" class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-head"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;h2&gt;Calculator&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="muted"&gt;Upload je CSV en vul je batterij- en prijsparameters in.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;1) Data upload&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;label class="label"&gt;Fluvius kwartiertotalen CSV&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="file" class="input" type="file" accept=".csv,text/csv" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="fileInfo" class="muted small mt8"&gt;Nog geen bestand gekozen.&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="parseMsg" class="mt12"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="mt12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;summary class="muted"&gt;Tips bij upload&lt;/summary&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;ul class="small"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Bestandstype: “kwartiertotalen”.&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;We tellen Afname (Dag+Nacht) en Injectie (Dag+Nacht) samen per kwartier.&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Lege “Geen verbruik” volumes worden als 0 kWh behandeld.&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;2) Batterij&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="label"&gt;Capaciteit (kWh)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input id="cap" class="input" type="number" value="10" min="0.5" step="0.1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="label"&gt;Reserve (%)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input id="reserve" class="input" type="number" value="10" min="0" max="50" step="1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="row mt12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="label"&gt;Max laadvermogen (kW)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input id="chkw" class="input" type="number" value="3" min="0.1" step="0.1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="label"&gt;Max ontlaadvermogen (kW)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input id="diskw" class="input" type="number" value="3" min="0.1" step="0.1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label class="label"&gt;Investering (€)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input id="invest" class="input" type="number" value="6000" min="0" step="50" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="muted small mt8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>Reserve = minimale SOC. Met 10% reserve kan je maximaal 90% ontladen.</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;3) Prijzen &amp; capaciteitstarief&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="label"&gt;All-in importprijs (€/kWh)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input id="pImport" class="input" type="number" value="0.33" min="0" step="0.001" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="muted small mt8"&gt;Incl. btw + nettarieven + heffingen (gemiddelde).&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="label"&gt;Injectieprijs (€/kWh)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input id="pInject" class="input" type="number" value="0.04" min="0" step="0.001" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="muted small mt8"&gt;Gemiddelde vergoeding voor teruglevering.&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;label class="label"&gt;Capaciteitstarief Vlaams gemiddeld (€/kW/jaar, incl. btw)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input id="capRateYear" class="input" type="number" value="49" min="0" step="0.1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="muted small mt8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>Minimum maandpiek = 2,5 kW. Rolling gemiddelde (laatste 12 maandpieken).</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt16"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;button id="run" class="btn" disabled&gt;Bereken&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div id="warn" class="mt12"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card results"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Resultaten&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="kpi-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="kpi"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="kpi-label"&gt;Totale besparing&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="kpiSaving" class="kpi-value"&gt;—&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="kpiSplit" class="muted small"&gt;—&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="kpi"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="kpi-label"&gt;Terugverdientijd&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="kpiPayback" class="kpi-value"&gt;—&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="kpiDataRange" class="muted small"&gt;—&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="kpi-grid mt12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="mini"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mini-label"&gt;Importreductie&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="kpiImpRed" class="mini-value"&gt;—&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="mini"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mini-label"&gt;Injectiereductie&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="kpiInjRed" class="mini-value"&gt;—&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="mini"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mini-label"&gt;Max maandpiek (voor → na)&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="kpiPeak" class="mini-value"&gt;—&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="mt16"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;summary class="muted"&gt;Details / debug&lt;/summary&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;pre id="debug" class="code"&gt;—&lt;/pre&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="muted small mt12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>Opmerking: als je dataset minder dan 12 maanden bevat, benaderen we het rolling-12 gemiddelde</p>
-<p class="p1"><span class="Apple-converted-space">              </span>met de beschikbare maanden.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="faq" class="section alt"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-head"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;h2&gt;FAQ&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="muted"&gt;Kort uitgelegd hoe de berekening werkt.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Wat doet de batterij in de simulatie?&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="muted"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>Bij injectie laadt de batterij (tot max kW en tot volle capaciteit). Bij import ontlaadt ze</p>
-<p class="p1"><span class="Apple-converted-space">              </span>(tot max kW en tot de minimum SOC door reserve).</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Hoe wordt het capaciteitstarief berekend?&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="muted"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>We berekenen per maand de hoogste kwartierafname (kW = kWh × 4), passen de minimum maandpiek (2,5 kW) toe,</p>
-<p class="p1"><span class="Apple-converted-space">              </span>en nemen een rolling gemiddelde van de laatste 12 maandpieken. Dit gemiddelde vermenigvuldigen we met het</p>
-<p class="p1"><span class="Apple-converted-space">              </span>Vlaams gemiddeld tarief (€/kW/jaar).</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Waarom “all-in” importprijs?&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="muted"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>Je gebruikt een gemiddelde prijs (incl. btw, nettarieven, heffingen) om jaarlijkse schommelingen te dempen</p>
-<p class="p1"><span class="Apple-converted-space">              </span>en een stabiel ROI-beeld te krijgen.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Bewaar je mijn data?&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="muted"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>Nee. Alles gebeurt lokaal in je browser zolang je deze pagina open hebt. Er is geen backend in deze MVP.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;footer class="footer"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container footer-inner"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="muted small"&gt;© Thuisbatterij ROI — MVP landingpage&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a class="muted small" href="#calculator"&gt;Naar calculator ↑&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/footer&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="./app.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-mark">⚡</div>
+        <div>
+          <div class="brand-title">Thuisbatterij ROI</div>
+          <div class="brand-sub">Op basis van je eigen Fluvius kwartierdata</div>
+        </div>
+      </div>
+      <a class="btn btn-ghost" href="#calculator">Start berekening</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Bereken het rendement van een thuisbatterij met kwartierwaarden</h1>
+          <p class="lead">
+            Upload je <b>Fluvius kwartiertotalen CSV</b> en simuleer hoeveel injectie je batterij kan opslaan
+            om later import te vermijden. Inclusief <b>capaciteitstarief</b> (Vlaams gemiddelde).
+          </p>
+
+          <div class="hero-points">
+            <div class="point">
+              <div class="point-title">✅ Echte data</div>
+              <div class="point-text">Gebaseerd op je import/injectie per kwartier.</div>
+            </div>
+            <div class="point">
+              <div class="point-title">✅ Simpel contractmodel</div>
+              <div class="point-text">Vaste all-in importprijs + vaste injectieprijs.</div>
+            </div>
+            <div class="point">
+              <div class="point-title">✅ Realistisch batterijmodel</div>
+              <div class="point-text">Vermogenslimieten + 10% reserve (max DoD 90%).</div>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn" href="#calculator">Bereken nu</a>
+            <a class="btn btn-ghost" href="#faq">Hoe werkt dit?</a>
+          </div>
+
+          <p class="fineprint">
+            Disclaimer: resultaten zijn indicatief. Gebruik standaard Vlaamse gemiddelden of pas prijzen aan.
+          </p>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-title">Wat je nodig hebt</div>
+          <ul class="checklist">
+            <li>Fluvius kwartiertotalen CSV</li>
+            <li>Batterij: kWh + kW laad/ontlaad</li>
+            <li>Investering (€)</li>
+            <li>Import €/kWh & injectie €/kWh</li>
+          </ul>
+          <div class="hero-card-note">
+            Geen PV-opbrengst of huisverbruik nodig: we werken met netto import/injectie.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculator" class="section">
+      <div class="container">
+        <h2>Calculator</h2>
+        <p class="muted">Upload je CSV en vul je parameters in.</p>
+        <!-- calculator UI komt hier, JS doet de rest -->
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
 </body>
 </html>
