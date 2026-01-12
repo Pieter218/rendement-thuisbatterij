@@ -22,6 +22,17 @@ function kwFmt(x){
   return x.toLocaleString("nl-BE", { maximumFractionDigits: 2 }) + " kW";
 }
 
+// Nieuwe berekeningen voor terugverdientijd en maximale prijs per jaar.
+function calculatePaybackYears(price, yearlySavings){
+  if (!isFinite(yearlySavings) || yearlySavings <= 0) return null;
+  if (!isFinite(price) || price <= 0) return 0;
+  return Math.ceil(price / yearlySavings);
+}
+function calculateMaxPriceForYears(years, yearlySavings){
+  if (!isFinite(yearlySavings) || yearlySavings <= 0) return null;
+  return Math.round(years * yearlySavings);
+}
+
 function setHTML(id, html){ document.getElementById(id).innerHTML = html; }
 function setText(id, text){ document.getElementById(id).textContent = text; }
 
@@ -159,6 +170,7 @@ let parsed = null;
 
 const fileEl = document.getElementById("file");
 const runBtn = document.getElementById("run");
+const inputIds = ["cap", "reserve", "chkw", "diskw", "invest", "pImport", "pInject", "capRateYear"];
 
 fileEl.addEventListener("change", () => {
   const f = fileEl.files?.[0];
@@ -207,7 +219,20 @@ fileEl.addEventListener("change", () => {
   });
 });
 
-runBtn.addEventListener("click", () => {
+function updateMaxPriceTable(yearlySavings){
+  const tbody = document.getElementById("maxPriceRows");
+  if (!tbody) return;
+
+  const rows = [];
+  for (let year = 1; year <= 15; year++){
+    const maxPrice = calculateMaxPriceForYears(year, yearlySavings);
+    const priceLabel = maxPrice === null ? "—" : euro(maxPrice);
+    rows.push(`<tr><td>${year}</td><td>${priceLabel}</td></tr>`);
+  }
+  tbody.innerHTML = rows.join("");
+}
+
+function updateResults(){
   setHTML("warn", "");
   if (!parsed?.rows?.length){
     setHTML("warn", `<div class="notice-warn">Upload eerst een CSV.</div>`);
@@ -243,13 +268,14 @@ runBtn.addEventListener("click", () => {
   const capSaving = cap.capCost0 - cap.capCost1;
 
   const totalSaving = energySaving + capSaving;
-  const payback = (totalSaving > 0 && invest > 0) ? (invest / totalSaving) : Infinity;
+  const paybackYears = calculatePaybackYears(invest, totalSaving);
 
   // Results
   setText("kpiSaving", `${euro(totalSaving)} / jaar (op datasetbasis)`);
   setText("kpiSplit", `Energie: ${euro2(energySaving)} • Capaciteit: ${euro2(capSaving)}`);
 
-  setText("kpiPayback", isFinite(payback) ? payback.toFixed(1).replace(".", ",") + " jaar" : "—");
+  setText("kpiPayback", paybackYears === null ? "Niet rendabel" : `${paybackYears} jaar`);
+  updateMaxPriceTable(totalSaving);
 
   const from = parsed.rows[0].ts;
   const to = parsed.rows[parsed.rows.length-1].ts;
@@ -289,7 +315,7 @@ runBtn.addEventListener("click", () => {
       energyCost0, energyCost1, energySaving,
       capCost0: cap.capCost0, capCost1: cap.capCost1, capSaving,
       totalSaving,
-      paybackYears: isFinite(payback) ? payback : null
+      paybackYears
     },
     peaks_kw: {
       maxMonthPeak0: cap.maxMonthPeak0,
@@ -298,4 +324,16 @@ runBtn.addEventListener("click", () => {
   };
 
   setText("debug", JSON.stringify(dbgObj, null, 2));
+}
+
+runBtn.addEventListener("click", updateResults);
+
+inputIds.forEach((id) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener("input", () => {
+    if (parsed?.rows?.length) updateResults();
+  });
 });
+
+updateMaxPriceTable(null);
