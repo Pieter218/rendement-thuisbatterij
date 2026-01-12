@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Thuisbatterij ROI Calculator (Vlaanderen)</title>
-
   <link rel="stylesheet" href="./styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
@@ -39,7 +38,7 @@
             </div>
             <div class="point">
               <div class="point-title">✅ Simpel contractmodel</div>
-              <div class="point-text">Vaste all-in importprijs + vaste injectieprijs.</div>
+              <div class="point-text">Vaste all-in importprijs + vaste injectieprijs (gemiddelden).</div>
             </div>
             <div class="point">
               <div class="point-title">✅ Realistisch batterijmodel</div>
@@ -63,7 +62,7 @@
             <li>Fluvius kwartiertotalen CSV</li>
             <li>Batterij: kWh + kW laad/ontlaad</li>
             <li>Investering (€)</li>
-            <li>Import €/kWh & injectie €/kWh</li>
+            <li>Import €/kWh & injectie €/kWh (gemiddelden)</li>
           </ul>
           <div class="hero-card-note">
             Geen PV-opbrengst of huisverbruik nodig: we werken met netto import/injectie.
@@ -74,11 +73,188 @@
 
     <section id="calculator" class="section">
       <div class="container">
-        <h2>Calculator</h2>
-        <p class="muted">Upload je CSV en vul je parameters in.</p>
-        <!-- calculator UI komt hier, JS doet de rest -->
+        <div class="section-head">
+          <h2>Calculator</h2>
+          <p class="muted">Upload je CSV en vul je batterij- en prijsparameters in.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>1) Data upload</h3>
+
+            <label class="label">Fluvius kwartiertotalen CSV</label>
+            <input id="file" class="input" type="file" accept=".csv,text/csv" />
+            <div id="fileInfo" class="muted small mt8">Nog geen bestand gekozen.</div>
+
+            <div id="parseMsg" class="mt12"></div>
+
+            <details class="mt12">
+              <summary class="muted">Tips bij upload</summary>
+              <ul class="small">
+                <li>Bestandstype: “kwartiertotalen”.</li>
+                <li>We tellen Afname (Dag+Nacht) en Injectie (Dag+Nacht) samen per kwartier.</li>
+                <li>Lege “Geen verbruik” volumes worden als 0 kWh behandeld.</li>
+              </ul>
+            </details>
+          </div>
+
+          <div class="card">
+            <h3>2) Batterij</h3>
+
+            <div class="row">
+              <div>
+                <label class="label">Capaciteit (kWh)</label>
+                <input id="cap" class="input" type="number" value="10" min="0.5" step="0.1" />
+              </div>
+              <div>
+                <label class="label">Reserve (%)</label>
+                <input id="reserve" class="input" type="number" value="10" min="0" max="50" step="1" />
+              </div>
+            </div>
+
+            <div class="row mt12">
+              <div>
+                <label class="label">Max laadvermogen (kW)</label>
+                <input id="chkw" class="input" type="number" value="3" min="0.1" step="0.1" />
+              </div>
+              <div>
+                <label class="label">Max ontlaadvermogen (kW)</label>
+                <input id="diskw" class="input" type="number" value="3" min="0.1" step="0.1" />
+              </div>
+            </div>
+
+            <div class="mt12">
+              <label class="label">Investering (€)</label>
+              <input id="invest" class="input" type="number" value="6000" min="0" step="50" />
+              <div class="muted small mt8">
+                Reserve = minimale SOC. Met 10% reserve kan je maximaal 90% ontladen.
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>3) Prijzen & capaciteitstarief</h3>
+
+            <div class="row">
+              <div>
+                <label class="label">All-in importprijs (€/kWh)</label>
+                <input id="pImport" class="input" type="number" value="0.33" min="0" step="0.001" />
+                <div class="muted small mt8">Incl. btw + nettarieven + heffingen (gemiddelde).</div>
+              </div>
+              <div>
+                <label class="label">Injectieprijs (€/kWh)</label>
+                <input id="pInject" class="input" type="number" value="0.04" min="0" step="0.001" />
+                <div class="muted small mt8">Gemiddelde vergoeding voor teruglevering.</div>
+              </div>
+            </div>
+
+            <div class="mt12">
+              <label class="label">Capaciteitstarief Vlaams gemiddeld (€/kW/jaar, incl. btw)</label>
+              <input id="capRateYear" class="input" type="number" value="49" min="0" step="0.1" />
+              <div class="muted small mt8">
+                Minimum maandpiek = 2,5 kW. Rolling gemiddelde (laatste 12 maandpieken).
+              </div>
+            </div>
+
+            <div class="mt16">
+              <button id="run" class="btn" disabled>Bereken</button>
+              <div id="warn" class="mt12"></div>
+            </div>
+          </div>
+
+          <div class="card results">
+            <h3>Resultaten</h3>
+
+            <div class="kpi-grid">
+              <div class="kpi">
+                <div class="kpi-label">Totale besparing</div>
+                <div id="kpiSaving" class="kpi-value">—</div>
+                <div id="kpiSplit" class="muted small">—</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Terugverdientijd</div>
+                <div id="kpiPayback" class="kpi-value">—</div>
+                <div id="kpiDataRange" class="muted small">—</div>
+              </div>
+            </div>
+
+            <div class="kpi-grid mt12">
+              <div class="mini">
+                <div class="mini-label">Importreductie</div>
+                <div id="kpiImpRed" class="mini-value">—</div>
+              </div>
+              <div class="mini">
+                <div class="mini-label">Injectiereductie</div>
+                <div id="kpiInjRed" class="mini-value">—</div>
+              </div>
+              <div class="mini">
+                <div class="mini-label">Max maandpiek (voor → na)</div>
+                <div id="kpiPeak" class="mini-value">—</div>
+              </div>
+            </div>
+
+            <details class="mt16">
+              <summary class="muted">Details / debug</summary>
+              <pre id="debug" class="code">—</pre>
+            </details>
+
+            <div class="muted small mt12">
+              Opmerking: als je dataset minder dan 12 maanden bevat, benaderen we het rolling-12 gemiddelde
+              met de beschikbare maanden.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>FAQ</h2>
+          <p class="muted">Kort uitgelegd hoe de berekening werkt.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Wat doet de batterij in de simulatie?</h3>
+            <p class="muted">
+              Bij injectie laadt de batterij (tot max kW en tot volle capaciteit). Bij import ontlaadt ze
+              (tot max kW en tot de minimum SOC door reserve).
+            </p>
+          </div>
+          <div class="card">
+            <h3>Hoe wordt het capaciteitstarief berekend?</h3>
+            <p class="muted">
+              We berekenen per maand de hoogste kwartierafname (kW = kWh × 4), passen de minimum maandpiek (2,5 kW) toe,
+              en nemen een rolling gemiddelde van de laatste 12 maandpieken. Dit gemiddelde vermenigvuldigen we met het
+              Vlaams gemiddeld tarief (€/kW/jaar).
+            </p>
+          </div>
+          <div class="card">
+            <h3>Waarom “all-in” importprijs?</h3>
+            <p class="muted">
+              Je gebruikt een gemiddelde prijs (incl. btw, nettarieven, heffingen) om jaarlijkse schommelingen te dempen
+              en een stabiel ROI-beeld te krijgen.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Bewaar je mijn data?</h3>
+            <p class="muted">
+              Nee. Alles gebeurt lokaal in je browser zolang je deze pagina open hebt. Er is geen backend in deze MVP.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="muted small">© Thuisbatterij ROI — MVP landingpage</div>
+      <a class="muted small" href="#calculator">Naar calculator ↑</a>
+    </div>
+  </footer>
+
   <script src="./app.js"></script>
+</body>
+</html>
